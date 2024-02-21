@@ -5,8 +5,8 @@ from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTex
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 
-from utils.constants import DATA_FOLDER, SOURCES_FILE_NAME, OPENAI_EMBEDDING_MODEL, VECTORS_FOLDER_BY_ARTICLE, \
-    VECTORS_FOLDER_BY_TEXT_SPLITTING
+from utils.constants import DATA_FOLDER, SOURCES_FILE_NAME, OPENAI_EMBEDDING_MODEL, VECTORS_FOLDER_BY_ARTICLE_SPLIT, \
+    VECTORS_FOLDER_BY_FIXED_SIZE_WINDOW_SPLIT
 
 
 def by_article_embeddings():
@@ -21,7 +21,7 @@ def by_article_embeddings():
                                       metadata={"source": f"{article.article_number} - {article.article_title}"}))
 
     Chroma.from_documents(documents=document_list, embedding=OPENAI_EMBEDDING_MODEL,
-                          persist_directory=f"{VECTORS_FOLDER_BY_ARTICLE}")
+                          persist_directory=f"{VECTORS_FOLDER_BY_ARTICLE_SPLIT}")
 
 
 def by_window_chunking():
@@ -36,18 +36,17 @@ def by_window_chunking():
         full_text += article.article_content
 
     text_splitter = RecursiveCharacterTextSplitter(
-        separators=["\n"],
-        chunk_size=20000,
+        chunk_size=2000,
         chunk_overlap=0,
         length_function=len
     )
 
-    texts = text_splitter.create_documents(full_text)
+    texts = text_splitter.create_documents([full_text])
     Chroma.from_documents(documents=texts, embedding=OPENAI_EMBEDDING_MODEL,
-                          persist_directory=f"{VECTORS_FOLDER_BY_TEXT_SPLITTING}")
+                          persist_directory=f"{VECTORS_FOLDER_BY_FIXED_SIZE_WINDOW_SPLIT}")
 
 
-by_article_embeddings()
+#by_article_embeddings()
 print("Done")
-#by_window_chunking()
-#print("Done")
+by_window_chunking()
+print("Done")

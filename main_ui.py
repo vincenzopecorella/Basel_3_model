@@ -1,12 +1,14 @@
 import logging
 
 import streamlit as st
-from chat_uis.ui_by_article import chat_ui_by_article
+from chat_uis.ui_by_article_chunking import chat_ui_by_article
+from chat_uis.ui_by_window_chunking import chat_ui_by_window
 
 logging.basicConfig(level=logging.INFO)
 
 available_uis = {
     "Ui with article chunking": chat_ui_by_article,
+    "ui with fixed size window chunking": chat_ui_by_window
 }
 
 st.set_page_config(
