@@ -5,14 +5,14 @@ from model_versions import model_from_article_split, model_from_fixed_size_windo
 
 
 def chat_ui_by_window() -> None:
-    """Chatbot UI with chunking by fixed size window"""
+    """Not optimized model"""
 
     if "init_push_window" not in st.session_state:
         st.session_state["init_push_window"] = True
         st.session_state["messages_push_window"] = []
         st.session_state["cited_docs_window"] = []
 
-    st.title("Window chunking Chat 📬")
+    st.title("Not optimized model Chat")
 
     container1, container2, user_query = st_chat_containers("Chat", "Citations")
 

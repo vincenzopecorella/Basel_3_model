@@ -5,14 +5,14 @@ from model_versions import model_from_article_split
 
 
 def chat_ui_by_article() -> None:
-    """Chatbot UI with chunking by article"""
+    """Optimized model"""
 
     if "init_push_article" not in st.session_state:
         st.session_state["init_push_article"] = True
         st.session_state["messages_push_article"] = []
         st.session_state["cited_docs_article"] = []
 
-    st.title("Article chunking Chat 📬")
+    st.title("Optimized model Chat")
 
     container1, container2, user_query = st_chat_containers("Chat", "Citations")
 
